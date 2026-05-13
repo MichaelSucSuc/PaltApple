@@ -6,17 +6,44 @@
   const whatsappFloat = document.getElementById('whatsappFloat');
 
   // Cambia este número si deseas usar otro destino de WhatsApp.
-  const WHATSAPP_NUMBER = '974014560';
+  // 974014560 (Perú) => 51974014560 en formato internacional.
+  const WHATSAPP_NUMBER = '51974014560';
 
-  const series = ['Todos', ...new Set(products.map((product) => product.series))];
+  const series = [
+    'Todos',
+    ...new Set(products.map((product) => product.series).filter((value) => typeof value === 'string' && value.trim()))
+  ];
   let activeSeries = 'Todos';
 
   const buildWhatsAppLink = (message) =>
     `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
+  const escapeHtml = (value) =>
+    String(value)
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
+
+  const safeImageUrl = (value) => {
+    try {
+      const parsed = new URL(String(value));
+      return parsed.protocol === 'https:' ? parsed.toString() : '#';
+    } catch {
+      return '#';
+    }
+  };
+
+  const clampRating = (stars) => {
+    const parsed = Number(stars);
+    if (!Number.isFinite(parsed)) return 0;
+    return Math.max(0, Math.min(5, Math.round(parsed)));
+  };
+
   const starRating = (stars) =>
     '<i class="fa-solid fa-star"></i>'.repeat(stars) +
-    '<i class="fa-regular fa-star"></i>'.repeat(Math.max(0, 5 - stars));
+    '<i class="fa-regular fa-star"></i>'.repeat(5 - stars);
 
   const formatPrice = (value) =>
     new Intl.NumberFormat('es-PE', {
@@ -51,33 +78,43 @@
 
     productGrid.innerHTML = filtered
       .map(
-        (product) => `
+        (product) => {
+          const safeName = escapeHtml(product.name);
+          const safeStorage = escapeHtml(product.storage);
+          const safeColor = escapeHtml(product.color);
+          const safeCondition = escapeHtml(product.condition);
+          const safeSeller = escapeHtml(product.seller);
+          const safeRating = clampRating(product.rating);
+          const safePrice = formatPrice(product.price);
+
+          return `
           <article class="product-card">
-            <img src="${product.image}" alt="${product.name}" loading="lazy" />
+            <img src="${safeImageUrl(product.image)}" alt="${safeName}" loading="lazy" />
             <div class="product-body">
               <div class="title-price">
-                <h3>${product.name}</h3>
-                <span class="price">${formatPrice(product.price)}</span>
+                <h3>${safeName}</h3>
+                <span class="price">${safePrice}</span>
               </div>
               <div class="badges">
-                <span class="condition">${product.condition}</span>
-                ${product.freeShipping ? '<span class="free-shipping">Envío gratis</span>' : '<span></span>'}
+                <span class="condition">${safeCondition}</span>
+                ${product.freeShipping ? '<span class="free-shipping">Envío gratis</span>' : ''}
               </div>
               <div class="meta">
-                <span><strong>Almacenamiento:</strong> ${product.storage}</span>
-                <span><strong>Color:</strong> ${product.color}</span>
+                <span><strong>Almacenamiento:</strong> ${safeStorage}</span>
+                <span><strong>Color:</strong> ${safeColor}</span>
               </div>
-              <p class="seller">Vendedor: ${product.seller}</p>
-              <p class="rating" aria-label="valoración ${product.rating} de 5">${starRating(product.rating)}</p>
+              <p class="seller">Vendedor: ${safeSeller}</p>
+              <p class="rating" aria-label="valoración ${safeRating} de 5">${starRating(safeRating)}</p>
               <a
                 class="ask-btn"
-                href="${buildWhatsAppLink(`Hola, me interesa el ${product.name} (${product.storage}, ${product.color}) por ${formatPrice(product.price)}.`)}"
+                href="${buildWhatsAppLink(`Hola, me interesa el ${safeName} (${safeStorage}, ${safeColor}) por ${safePrice}.`)}"
                 target="_blank"
                 rel="noopener noreferrer"
               >Preguntar por este iPhone</a>
             </div>
           </article>
-        `
+        `;
+        }
       )
       .join('');
   }
