@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PaltApple | Marketplace estilo Swappa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8RkP5gH3Lw2V5P6bR9xQ6X+Y8f8M4+w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <a href="#" class="logo">PaltApple</a>
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#catalog">Browse</a></li>
+            <li><a href="#sell">Sell</a></li>
+            <li><a href="#guides">Guides</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div>
+            <p class="eyebrow">Marketplace estilo Swappa</p>
+            <h1>Stock central de iPhones verificados</h1>
+            <p>
+              Encuentra iPhone 15, 14, 13, 12, SE y más, listos para envío rápido.
+            </p>
+            <div class="hero-stats">
+              <div class="stat">
+                <span id="availableCount">0</span>
+                <small>productos disponibles</small>
+              </div>
+            </div>
+          </div>
+          <div class="hero-card" id="sell">
+            <h3>¿Quieres vender tu iPhone?</h3>
+            <p>Publica con confianza en PaltApple y conecta con compradores reales.</p>
+            <a class="primary-btn" href="#catalog">Ver catálogo</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="filters" id="guides">
+        <div class="container">
+          <h2>Filtrar por serie</h2>
+          <div id="seriesFilters" class="chip-row" role="tablist" aria-label="Series de iPhone"></div>
+        </div>
+      </section>
+
+      <section class="catalog" id="catalog">
+        <div class="container">
+          <div id="productGrid" class="product-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <a
+      id="whatsappFloat"
+      class="whatsapp-float"
+      href="#"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Contactar por WhatsApp"
+    >
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <footer>
+      <div class="container">
+        <p>PaltApple - Marketplace estilo Swappa</p>
+      </div>
+    </footer>
+
+    <script src="assets/data/products.js"></script>
+    <script src="assets/js/app.js"></script>
+  </body>
+</html>
