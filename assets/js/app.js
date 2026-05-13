@@ -1,4 +1,42 @@
 (function () {
+  // ===== MANEJO DE TEMA OSCURO =====
+  const themeSwitcher = document.getElementById('themeSwitcher');
+  const html = document.documentElement;
+  
+  // Detectar preferencia guardada o preferencia del sistema
+  const initTheme = () => {
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+    
+    if (theme === 'dark') {
+      html.setAttribute('data-theme', 'dark');
+      themeSwitcher.textContent = '☀️';
+    } else {
+      html.removeAttribute('data-theme');
+      themeSwitcher.textContent = '🌙';
+    }
+  };
+
+  if (themeSwitcher) {
+    initTheme();
+
+    themeSwitcher.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+      if (newTheme === 'dark') {
+        html.setAttribute('data-theme', 'dark');
+        themeSwitcher.textContent = '☀️';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        html.removeAttribute('data-theme');
+        themeSwitcher.textContent = '🌙';
+        localStorage.setItem('theme', 'light');
+      }
+    });
+  }
+
   const products = window.PALTAPPLE_PRODUCTS || [];
   const productGrid = document.getElementById('productGrid');
   const seriesFilters = document.getElementById('seriesFilters');
@@ -48,7 +86,7 @@
   const formatPrice = (value) =>
     new Intl.NumberFormat('es-PE', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'PEN',
       maximumFractionDigits: 0
     }).format(value);
 
@@ -86,6 +124,7 @@
           const safeSeller = escapeHtml(product.seller);
           const safeRating = clampRating(product.rating);
           const safePrice = formatPrice(product.price);
+          const batteryHealth = product.batteryHealth || 'N/A';
 
           return `
           <article class="product-card">
@@ -98,6 +137,7 @@
               <div class="badges">
                 <span class="condition">${safeCondition}</span>
                 ${product.freeShipping ? '<span class="free-shipping">Envío gratis</span>' : ''}
+                <span class="battery" style="background: ${batteryHealth >= 90 ? '#16a34a' : batteryHealth >= 80 ? '#f59e0b' : '#ef4444'}">🔋 ${batteryHealth}%</span>
               </div>
               <div class="meta">
                 <span><strong>Almacenamiento:</strong> ${safeStorage}</span>
@@ -107,10 +147,10 @@
               <p class="rating" aria-label="valoración ${safeRating} de 5">${starRating(safeRating)}</p>
               <a
                 class="ask-btn"
-                href="${buildWhatsAppLink(`Hola, me interesa el ${safeName} (${safeStorage}, ${safeColor}) por ${safePrice}.`)}"
+                href="${buildWhatsAppLink(`Hola, me interesa el ${safeName}\n📦 Almacenamiento: ${safeStorage}\n🎨 Color: ${safeColor}\n💵 Precio: ${safePrice}\n🔋 Batería: ${batteryHealth}%\n¿Está disponible?`)}"
                 target="_blank"
                 rel="noopener noreferrer"
-              >Preguntar por este iPhone</a>
+              >🛒 Preguntar por este iPhone</a>
             </div>
           </article>
         `;
@@ -119,7 +159,7 @@
       .join('');
   }
 
-  whatsappFloat.href = buildWhatsAppLink('Hola PaltApple, quiero información del stock de iPhones.');
+  whatsappFloat.href = buildWhatsAppLink('¡Hola! 👋 Quisiera recibir información sobre el stock disponible de iPhones verificados en PaltApple. Me interesa conocer más detalles sobre los modelos, precios y disponibilidad. 📱');
 
   renderFilters();
   renderProducts();
