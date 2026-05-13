@@ -1,0 +1,287 @@
+:root {
+  --bg: #f5f7fb;
+  --card: #ffffff;
+  --text: #111827;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --success: #16a34a;
+  --line: #e5e7eb;
+  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin: 0 auto;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 72px;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #374151;
+  font-weight: 600;
+}
+
+.hero {
+  padding: 3.5rem 0 2rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+.eyebrow {
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+h1 {
+  margin-top: 0;
+  font-size: clamp(1.7rem, 4vw, 2.8rem);
+}
+
+.hero-card {
+  background: var(--card);
+  border-radius: 18px;
+  padding: 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+.primary-btn {
+  display: inline-block;
+  margin-top: 0.8rem;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.stat {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  display: inline-flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+}
+
+.stat span {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.stat small {
+  color: var(--muted);
+}
+
+.filters {
+  padding: 0.4rem 0 1rem;
+}
+
+h2 {
+  margin: 0 0 0.8rem;
+}
+
+.chip-row {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.chip {
+  border: 1px solid var(--line);
+  background: var(--card);
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.chip.active {
+  color: #fff;
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.catalog {
+  padding-bottom: 5rem;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.product-card {
+  background: var(--card);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.product-body {
+  padding: 0.9rem;
+}
+
+.title-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.5rem;
+}
+
+.price {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem;
+  font-size: 0.86rem;
+  color: #374151;
+  margin: 0.65rem 0;
+}
+
+.badges {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+}
+
+.badges .condition {
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  padding: 0.2rem 0.55rem;
+  font-weight: 700;
+}
+
+.free-shipping {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.seller {
+  margin: 0.5rem 0 0.7rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.rating {
+  color: #f59e0b;
+}
+
+.ask-btn {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-radius: 12px;
+  padding: 0.6rem;
+  background: #111827;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+}
+
+.whatsapp-float {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #25d366;
+  color: #fff;
+  font-size: 1.7rem;
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  z-index: 50;
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  background: #fff;
+  padding: 1rem 0 2rem;
+  color: #4b5563;
+}
+
+@media (max-width: 1000px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    gap: 0.6rem;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
